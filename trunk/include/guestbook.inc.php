@@ -38,7 +38,7 @@ function get_guestbook_inscriptions($dbconn, $diary_login, $format)
 				    '{inscription}' => $data->inscription,
 				    '{date}' => date("d-m-Y", $data->timestamp),
 				    '{time}' => date("H:i:s", $data->timestamp),
-				    '{ipaddress}' => $data->ipaddress
+//				    '{ipaddress}' => $data->ipaddress
 				    ));
     }
 
@@ -78,8 +78,9 @@ function show_guestbook_add_page($dbconn, $diary_login)
 function add_guestbook_inscription($dbconn, $diary_uid)
 {
     echo $sql = "INSERT INTO guestbook (uid, author, email, webpage, ipaddress, inscription, timestamp)
-	    VALUES ('" . $diary_uid . "', '" . $_POST['author'] . "', '" . $_POST['email'] . "', '" . $_POST['webpage']
-	    . "', '" . $_SESSION['ip'] . "', '" . $_POST['inscription'] . "', '" . time() . "')";
+	    VALUES ('" . $diary_uid . "', '" . addslashes($_POST['author']) . "', '" . $_POST['email']
+	    . "', '" . $_POST['webpage'] . "', '" . $_SESSION['ip'] . "', '" . addslashes($_POST['inscription'])
+	    . "', '" . time() . "')";
     pg_query($sql) or die(pg_last_error($dbconn));
 }
 

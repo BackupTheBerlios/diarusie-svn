@@ -59,7 +59,7 @@ function get_comments($dbconn, $diary_login, $format, $nid)
 				    '{email}' => $data->email,
 				    '{date}' => date("d-m-Y", $data->timestamp),
 				    '{time}' => date("H:i:s", $data->timestamp),
-				    '{ipaddress}' => $data->ipaddress,
+//				    '{ipaddress}' => $data->ipaddress,
 				    '{contents}' => $data->contents,
 				    ));
     }
@@ -138,8 +138,9 @@ function show_comment_add_page($dbconn, $diary_login)
 function add_comment_contents($dbconn, $diary_uid)
 {
     echo $sql = "INSERT INTO comments (uid, nid, author, email, webpage, ipaddress, contents, timestamp)
-		VALUES ('" . $diary_uid . "', '" . (int)$_POST['nid'] . "', '" . $_POST['author'] . "', '" . $_POST['email']
-		. "', '" . $_POST['webpage'] . "', '" . $_SESSION['ip'] . "', '" . $_POST['contents'] . "', '" . time() . "')";
+		VALUES ('" . $diary_uid . "', '" . (int)$_POST['nid'] . "', '" . addslashes($_POST['author'])
+		 . "', '" . $_POST['email'] . "', '" . $_POST['webpage'] . "', '" . $_SESSION['ip']
+		 . "', '" . addslashes($_POST['contents']) . "', '" . time() . "')";
     pg_query($sql) or die(pg_last_error($dbconn));
 }
 

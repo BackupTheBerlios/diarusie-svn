@@ -76,14 +76,13 @@ function decode_ip($encoded_ipv4)
 
 function connect_db()
 {
-    if($conn = @pg_connect("host=" . SQL_HOST . " port=" . SQL_PORT . " dbname=" . SQL_DATABASE . " user=" . SQL_USERNAME . " password=" . SQL_PASSWORD))
+    if($conn = pg_connect("host=" . SQL_HOST . " port=" . SQL_PORT . " dbname=" . SQL_DATABASE . " user=" . SQL_USERNAME . " password=" . SQL_PASSWORD))
     {
 	pg_set_client_encoding($conn, 'UNICODE');
 	return $conn;
     }
     else
     {
-	echo "Last Error: " . pg_last_error($conn);
         return false;
     }
 }
